@@ -8,4 +8,12 @@ router.get("/", async (req, res) => {
     shorturl: null,
   });
 });
+router.get("/signup",(req,res)=>{
+  return res.render("signup");
+})
+router.get("/login",(req,res)=>{
+  return res.render("Login",{
+    error: null
+  });
+})
 module.exports = router;

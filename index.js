@@ -17,6 +17,8 @@ app.set("views", "./views");
 
 const router = require("./routes/urlroues.js");
 app.use("/url", router);
+const userrouter=require("./routes/user.route.js");
+app.use("/user",userrouter);
 
 app.get("/url/:shortid", async (req, res) => {
   const shortid = req.params.shortid;
