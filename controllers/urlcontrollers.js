@@ -1,13 +1,16 @@
-const { nanoid } = require("nanoid");
+const { nanoid } = require("nanoid"); //shortid is a package which is used to generate unique id for each url
+
 const Url = require("../models/urlmodel.js");
+
 const postdata = async (req, res) => {
-  const body = req.body;
+  const body = req.body; //body is an object which contains the data sent by the client in the request body
   const urls = await Url.find();
+
   if (!body || !body.url)
-    return res.status(400).json({ status: "url is required" });
+    return res.status(400).json({ status: "url is required" }); //if body is empty or url is not present in the body then return 400 status code with message url is required
   const existingUrl = await Url.findOne({
     originalUrl: req.body.url,
-  });
+  }); //findOne is a mongoose method which is used to find a single document in the collection which matches the query
 
   if (existingUrl) {
     return res.render("home", {

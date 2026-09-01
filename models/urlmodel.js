@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const urlSchema =mongoose.Schema(
+const urlSchema = mongoose.Schema(
   {
     originalUrl: {
       type: String,
@@ -22,5 +22,5 @@ const urlSchema =mongoose.Schema(
     timestamps: true,
   },
 );
-const Url= mongoose.model("Url", urlSchema);
+const Url = mongoose.model("Url", urlSchema);
 module.exports = Url;
