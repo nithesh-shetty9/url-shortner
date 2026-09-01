@@ -1,3 +1,7 @@
 const express = require("express");
 const jsonMiddleware = express.json();
-module.exports=jsonMiddleware;
+const urlencodedMiddleware = express.urlencoded({ extended: true });
+module.exports={
+    jsonMiddleware,
+    urlencodedMiddleware
+};

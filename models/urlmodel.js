@@ -3,6 +3,7 @@ const urlSchema =mongoose.Schema(
   {
     originalUrl: {
       type: String,
+      unique: true,
       required: true,
     },
 

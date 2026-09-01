@@ -2,15 +2,26 @@ const { nanoid } = require("nanoid");
 const Url = require("../models/urlmodel.js");
 const postdata = async (req, res) => {
   const body = req.body;
+  const urls = await Url.find();
   if (!body || !body.url)
     return res.status(400).json({ status: "url is required" });
+  const existingUrl = await Url.findOne({
+    originalUrl: req.body.url,
+  });
+
+  if (existingUrl) {
+    return res.render("home", {
+      urls: await Url.find(),
+      shorturl: existingUrl.shortCode,
+    });
+  }
   const shorturl = nanoid(8);
   await Url.create({
     shortCode: shorturl,
     originalUrl: body.url,
   });
-  return res.status(201).json({
-    message: "Short URL created",
+  return res.render("home", {
+    urls: urls,
     shorturl: shorturl,
   });
 };
