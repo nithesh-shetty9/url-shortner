@@ -4,19 +4,21 @@ const port = 8001;
 //accesing datas stored in database
 const Url = require("./models/urlmodel.js"); //MODEL SCHEMA
 const connectDB = require("./config/urlconfig.js"); //DB CONNECTION
-
+const {validateuser,checkauth}=require("./middleware/auth.middleware.js")
 //middlware accessing and usi
 const middleware1 = require("./middleware/urlmiddleware.js");
 app.use(middleware1.jsonMiddleware);
 app.use(middleware1.urlencodedMiddleware);
+app.use(middleware1.cookieparser());
+
 
 const staticrouter = require("./routes/staticrouter.js");
-app.use("/", staticrouter);
+app.use("/",checkauth, staticrouter);
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
 const router = require("./routes/urlroues.js");
-app.use("/url", router);
+app.use("/url",validateuser, router);
 const userrouter=require("./routes/user.route.js");
 app.use("/user",userrouter);
 

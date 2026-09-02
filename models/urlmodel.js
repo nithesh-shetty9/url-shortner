@@ -3,7 +3,6 @@ const urlSchema = mongoose.Schema(
   {
     originalUrl: {
       type: String,
-      unique: true,
       required: true,
     },
 
@@ -17,6 +16,10 @@ const urlSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
+    createdBy:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"users"
+    }
   },
   {
     timestamps: true,

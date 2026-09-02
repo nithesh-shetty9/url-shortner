@@ -10,11 +10,11 @@ const postdata = async (req, res) => {
     return res.status(400).json({ status: "url is required" }); //if body is empty or url is not present in the body then return 400 status code with message url is required
   const existingUrl = await Url.findOne({
     originalUrl: req.body.url,
-  }); //findOne is a mongoose method which is used to find a single document in the collection which matches the query
-
+    createdBy: req.user._id
+  });
   if (existingUrl) {
     return res.render("home", {
-      urls: await Url.find(),
+      urls: await Url.find({ createdBy: req.user._id }),
       shorturl: existingUrl.shortCode,
     });
   }
@@ -22,9 +22,10 @@ const postdata = async (req, res) => {
   await Url.create({
     shortCode: shorturl,
     originalUrl: body.url,
+    createdBy:req.user._id
   });
   return res.render("home", {
-    urls: urls,
+    urls: await Url.find({ createdBy: req.user._id }),
     shorturl: shorturl,
   });
 };
