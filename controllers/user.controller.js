@@ -20,9 +20,12 @@ const handleuserlogin=async(req,res)=>{
             error:"invalid username or password"
         })
     }
-    const sessionid=uuidv4();
-    setuser(sessionid,user);
-    res.cookie('uid',sessionid);
+    const token=setuser({
+        _id: user._id.toString(),
+        name: user.name,
+        email: user.email
+    });
+    res.cookie('uid',token);
     return res.redirect("/");
 }
 module.exports={

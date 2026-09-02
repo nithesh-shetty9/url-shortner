@@ -1,9 +1,9 @@
 const {getuser}=require("../services/auth");
 
 const validateuser = (req, res, next) => {
-  const userid = req.cookies?.uid;
-  if(!userid)return res.redirect("/login");
-  const user=getuser(userid);
+  const token = req.cookies?.uid;
+  if(!token)return res.redirect("/login");
+  const user=getuser(token);
   if(!user)
   {
     return res.redirect("/login")
@@ -12,8 +12,10 @@ const validateuser = (req, res, next) => {
   next();
 };
 const checkauth=(req,res,next)=>{
-   const userid = req.cookies?.uid;
-  const user=getuser(userid);
+   const token = req.cookies?.uid?req.cookies?.uid:null;
+   if(!token)return next();
+   const user=getuser(token);
+   if(!user)return next();
   req.user=user;
   next();
 }
