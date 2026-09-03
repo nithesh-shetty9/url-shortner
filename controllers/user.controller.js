@@ -9,24 +9,22 @@ const postusersignup=async(req,res)=>{
         email,
         password
     })
-    return res.redirect("/")
+    return res.json({message:"user created successfully"})
 }
 const handleuserlogin=async(req,res)=>{
     const {email,password}=req.body;
     const user=await users.findOne({email});
+    console.log(user);
     if(!user||user.password!=password)
     {
-        return res.render("Login",{
-            error:"invalid username or password"
-        })
+        return res.json({error:"invalid username or password"})
     }
     const token=setuser({
         _id: user._id.toString(),
         name: user.name,
         email: user.email
     });
-    res.cookie('uid',token);
-    return res.redirect("/");
+    return res.json({token});
 }
 module.exports={
     postusersignup,

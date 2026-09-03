@@ -45,5 +45,6 @@ connectDB()
     });
   })
   .catch((error) => {
-    console.log("failed to connect to server");
+    console.error("Failed to start server:", error.message);
+    process.exitCode = 1;
   });
